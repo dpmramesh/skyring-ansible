@@ -1,0 +1,15 @@
+1. Install 1 RHEL 7 Node for Skyring Server and few nodes for Ceph Servers
+2. Setup password less ssh between your machine and all the VMs
+3. Install Ansible on your machine
+4. Edit the inventory file with correct IP address. 
+    skyring-server section should have the skyring server IP and ceph-servers section should have all the ceph server IPs
+5. Run the following command to install skyring server. Make sure u subsitute correct cdn info
+   ansible-playbook -u root install-rhscon-server.yml -i inventory --extra-vars  "cdn_user_name=<cdn-username> cdn_user_pwd=<cdn-password>"  --flush-cache
+
+6. Setup the skyring server by running following command. 
+   ansible-playbook -u root  setup-skyring-server.yml -i inventory-rhscon
+   Note: You have to manually run skyring-setup.sh in the skyring server 
+
+7. Install ceph servers using the following command. Dont forgot to subsitute CDN info and Skyring server info here. Make sure ceph-installer is running on the skyring-server before running this command.
+
+   ansible-playbook -u root install-rhscon-ceph-servers.yml -i inventory --extra-vars  "cdn_user_name=<user-name> cdn_user_pwd=<pwd> skyring_server=dhcp43-184.lab.eng.blr.redhat.com"  --flush-cache

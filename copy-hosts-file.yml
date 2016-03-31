@@ -1,0 +1,7 @@
+---
+- name: Copy Etc Hosts File
+  hosts: ceph-servers
+  remote_user: root
+  tasks:
+  - name: Copy File
+    copy: src=./hosts-entries dest=/etc/hosts

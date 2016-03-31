@@ -1,0 +1,17 @@
+---
+- name: Install and Start Skyring Server
+  hosts: ceph-servers
+  gather_facts: no
+  vars:
+    skyring_server: dhcp43-184.lab.eng.blr.redhat.com
+  remote_user: root
+  tasks:
+  - name: Configure Salt minion with salt master IP and restart salt minion service
+    lineinfile: "dest=/etc/salt/minion regexp=master: line='master: {{ skyring_server }}'"
+  - name: Write ceph_agent.conf file
+    shell: "echo 'master: {{ skyring_server }}' > /etc/salt/minion.d/ceph_agent.conf"
+  - name: Restart salt minion service
+    service: name=salt-minion state=restarted
+  - name: Flush Firewall Rules
+    shell: iptables --flush
+

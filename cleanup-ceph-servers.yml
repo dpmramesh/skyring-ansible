@@ -1,0 +1,47 @@
+- name: Cleanup ceph hosts
+  hosts: ceph-servers
+  gather_facts: no
+  tasks:
+  - name: stop ceph service
+    shell: service ceph -c /etc/ceph/*.conf stop
+  - name: kill ceph mon
+    command: killall ceph-mon
+    ignore_errors: True
+  - name: kill ceph osd
+    command: killall ceph-osd
+    ignore_errors: True
+  - name: Pause to let ceph service end
+    pause: seconds=10
+  - name: unmount OSD disks
+    shell: umount /var/lib/ceph/osd/*
+    ignore_errors: True
+  - name: unmount Temp OSD disks
+    shell: umount /var/lib/ceph/tmp/*
+    ignore_errors: True
+  - name: Remove ceph configuration
+    shell: rm -rf /etc/ceph /var/lib/ceph/* /var/log/ceph/* /var/log/salt/*
+    ignore_errors: True
+  - name: Copy fdisk.input
+    copy: content="d\n1\nd\nw\n\n" dest=/tmp/fdisk.input
+  - name: Cleanup the disks
+    shell: fdisk /dev/sdb </tmp/fdisk.input
+    ignore_errors: True
+  - name: Cleanup the disks
+    shell: fdisk /dev/sdc </tmp/fdisk.input
+    ignore_errors: True
+  - name: Cleanup the disks
+    shell: fdisk /dev/sdd </tmp/fdisk.input
+    ignore_errors: True
+  - name: partprobe
+    command: partprobe
+  - name: remove salt master pub
+    command: rm -rf /etc/salt/pki/minion/minion_master.pub
+  - name: Restart salt-minion
+    service: name=salt-minion state=stopped
+  - name: Stop supervisord
+    service: name=supervisord state=stopped
+  - name: clean Calamri
+    shell:  calamari-ctl clear --yes-i-am-sure
+  - name: Stop Calamari service
+    shell: supervisorctl stop all
+

@@ -1,0 +1,7 @@
+192.168.10.100 skyring-server.test.com
+192.168.10.10 ceph-server-0.test.com
+192.168.10.11 ceph-server-1.test.com
+192.168.10.12 ceph-server-2.test.com
+192.168.10.13 ceph-server-3.test.com
+192.168.10.14 ceph-server-4.test.com
+192.168.10.15 ceph-server-5.test.com

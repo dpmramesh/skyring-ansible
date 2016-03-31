@@ -1,0 +1,13 @@
+#Skyring-Server
+ansible_python_interpreter=/usr/bin/python26
+[skyring-server]
+10.70.43.184
+
+#Ceph-Nodes
+[ceph-servers]
+10.70.42.145
+10.70.43.175
+10.70.43.176
+10.70.42.28
+10.70.43.162
+10.70.43.156

@@ -1,0 +1,13 @@
+---
+- name: Install and Start Skyring Server
+  hosts: skyring-server
+  gather_facts: no
+  remote_user: root
+  tasks:
+  - name: start skyring service
+    service: name=skyringd state=restarted
+  - name: start slat master service
+    service: name=salt-master state=restarted
+  - name: Flush Firewall Rules
+    shell: iptables --flush
+

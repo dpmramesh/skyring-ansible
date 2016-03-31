@@ -1,0 +1,11 @@
+---
+- name: Cleanup Skyring Server
+  hosts: skyring-server
+  gather_facts: no
+  tasks:
+  - name: Copy Skyring clean-up script
+    copy: src="cleanup.sh" dest=/tmp/cleanup.sh mode=0751
+  - name: Cleanup skyring server
+    shell: /tmp/cleanup.sh
+  - name: Clean log files
+    shell: rm -rf /var/log/skyring/*
