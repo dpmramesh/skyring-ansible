@@ -6,7 +6,7 @@
     cdn_user_name: <user@redhat.com>
     cdn_user_pwd: <password>
     cdn_pool_id: 8a85f9823e3d5e43013e3ddd4e9509c4
-    skyring_server: dhcp43-184.lab.eng.blr.redhat.com
+    skyring_server: <skyring-server-DHCP-name>
   remote_user: root
   tasks:
   - name: Registering to CDN
@@ -26,7 +26,9 @@
   - name: Adding RHSCON-2 Puddle Repo
     shell: wget http://dev-puddle.ceph.redhat.com/puddles/rhscon/2/latest/RHSCON-2.repo -P /etc/yum.repos.d/
   - name: Installing salt-minion packages
-    shell: yum install salt-minion -y --nogpgcheck
+    shell: yum install salt-minion rhscon-agent collectd calamari-server -y --nogpgcheck
+  - name: Calamari Initialize
+    shell: calamari-ctl initialize
   - name: Setting up Handshake with Ceph-Installer
     shell: curl http://'{{ skyring_server }}':8181/setup/ | bash
   - name: Setting up rhscon-agent packges
@@ -39,4 +41,3 @@
     shell: systemctl disable firewalld.service
   - name: Flush Firewall Rules
     shell: iptables --flush
-
