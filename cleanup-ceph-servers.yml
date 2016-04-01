@@ -4,6 +4,7 @@
   tasks:
   - name: stop ceph service
     shell: service ceph -c /etc/ceph/*.conf stop
+    ignore_errors: True
   - name: kill ceph mon
     command: killall ceph-mon
     ignore_errors: True
