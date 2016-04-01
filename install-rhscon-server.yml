@@ -23,7 +23,7 @@
   - name: Adding Jenkins Repo
     shell: wget http://jenkins.lab.eng.blr.redhat.com/rhscon/rhscon.repo -P /etc/yum.repos.d/
   - name: Adding RHSCON-2 Puddle Repo
-    shell: yum-config-manager --add http://dev-puddle.ceph.redhat.com/puddles/rhscon/2/2016-03-30.3/RHSCON-2/x86_64/os/
+    shell: yum-config-manager --add http://puddle.ceph.redhat.com/puddles/rhscon/2/2016-03-15.5/RHSCON-2.repo
   - name: Installing rhscon packages
     shell: yum install rhscon-core rhscon-ceph rhscon-ui -y --nogpgcheck 
   - name: Stop Firewalld Service
